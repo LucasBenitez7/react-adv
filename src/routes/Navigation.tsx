@@ -5,9 +5,12 @@ import {
 	Navigate,
 	Routes,
 } from "react-router-dom";
-
 import logo from "../logo.svg";
-import { LazyPage1, LazyPage2, LazyPage3 } from "../01-lazyload/pages";
+import { routes } from "./routes";
+
+const { to, path, Component, name } = routes[0];
+
+console.log({ to, path, Component, name });
 
 export const Navigation = () => {
 	return (
@@ -18,36 +21,36 @@ export const Navigation = () => {
 					<ul>
 						<li>
 							<NavLink
-								to="/lazy1"
+								to={to}
 								className={({ isActive }) => (isActive ? "nav-active" : "")}
 							>
-								Lazy 1
+								{name}
 							</NavLink>
 						</li>
 						<li>
 							<NavLink
-								to="/lazy2"
+								to={to}
 								className={({ isActive }) => (isActive ? "nav-active" : "")}
 							>
-								Lazy 2
+								{name}
 							</NavLink>
 						</li>
 						<li>
 							<NavLink
-								to="/lazy3"
+								to={to}
 								className={({ isActive }) => (isActive ? "nav-active" : "")}
 							>
-								Lazy 3
+								{name}
 							</NavLink>
 						</li>
 					</ul>
 				</nav>
 
 				<Routes>
-					<Route path="/lazy1" element={<LazyPage1 />} />
-					<Route path="/lazy2" element={<LazyPage2 />} />
-					<Route path="/lazy3" element={<LazyPage3 />} />
-					<Route path="/*" element={<Navigate to="/lazy1" replace />}></Route>
+					<Route path={path.toString()} element={<Component />} />
+					<Route path={path.toString()} element={<Component />} />
+					<Route path={path.toString()} element={<Component />} />
+					<Route path="/*" element={<Navigate to={to} replace />}></Route>
 				</Routes>
 			</div>
 		</BrowserRouter>

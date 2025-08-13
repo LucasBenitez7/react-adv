@@ -15,15 +15,15 @@ export const routes: Route[] = [
 		name: "Lazy 1",
 	},
 	{
-		to: "/lazy1",
-		path: "/lazy1",
+		to: "/lazy2",
+		path: "/lazy2",
 		Component: LazyPage2,
-		name: "Lazy 1",
+		name: "Lazy 2",
 	},
 	{
-		to: "/lazy1",
-		path: "/lazy1",
+		to: "/lazy3",
+		path: "/lazy3",
 		Component: LazyPage3,
-		name: "Lazy 1",
+		name: "Lazy 3",
 	},
 ];
