@@ -1,34 +1,62 @@
-import { useState } from "react";
+import { ReactElement } from "react";
 import styles from "../styles/styles.module.css";
-// import noImage from "../assets/no-image.jpg";
+import noImage from "../assets/no-image.jpg";
 
-export const ProductCard = () => {
-	const [counter, setcounter] = useState(0);
+interface Props {
+	product: Product;
+	children?: ReactElement | ReactElement[];
+}
 
-	const increaseBy = (value: number) => {
-		setcounter((prev) => Math.max(prev + value, 0));
-	};
+interface Product {
+	id: string;
+	title: string;
+	img?: string;
+}
 
+interface ProductButtonsProps {
+	counter: number;
+	increaseBy: (value: number) => void;
+}
+
+export const ProductImage = ({ img = "" }) => {
 	return (
-		<div className={styles.productCard}>
-			<img
-				className={styles.productImg}
-				src="./coffee-mug.png"
-				alt="Coffee Mug"
-			/>
-			<span className={styles.productDescription}>Coffe Mug</span>
+		<img
+			className={styles.productImg}
+			src={img ? img : noImage}
+			alt="Product-Image"
+		/>
+	);
+};
 
-			{/* <img className={styles.productImg} src={noImage} alt="no img" /> */}
+export const ProductTitle = ({ title }: { title: string }) => {
+	return <span className={styles.productDescription}>{title}</span>;
+};
 
-			<div className={styles.buttonsContainer}>
-				<button onClick={() => increaseBy(-1)} className={styles.buttonMinus}>
-					-
-				</button>
-				<span className={styles.countLabel}>{counter}</span>
-				<button onClick={() => increaseBy(1)} className={styles.buttonAdd}>
-					+
-				</button>
-			</div>
+export const ProductButtons = ({
+	counter,
+	increaseBy,
+}: ProductButtonsProps) => {
+	return (
+		<div className={styles.buttonsContainer}>
+			<button onClick={() => increaseBy(-1)} className={styles.buttonMinus}>
+				-
+			</button>
+			<span className={styles.countLabel}>{counter}</span>
+			<button onClick={() => increaseBy(1)} className={styles.buttonAdd}>
+				+
+			</button>
 		</div>
 	);
 };
+
+export const ProductCard = ({ children }: Props) => {
+	return (
+		<div className={styles.productCard}>
+			{children}
+		</div>
+	);
+};
+
+ProductCard.Image = ProductImage;
+ProductCard.Title = ProductTitle;
+ProductCard.Buttons = ProductButtons;
