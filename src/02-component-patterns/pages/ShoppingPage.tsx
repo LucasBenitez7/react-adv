@@ -1,5 +1,9 @@
-import { ProductCard } from "../components/ProductCard";
-import { useProduct } from "../hooks/useProduct";
+import {
+	ProductButtons,
+	ProductCard,
+	ProductImage,
+	ProductTitle,
+} from "../components/ProductCard";
 
 const product = {
 	id: "1",
@@ -8,23 +12,21 @@ const product = {
 };
 
 export const ShoppingPage = () => {
-	const { counter, increaseBy } = useProduct();
-
 	return (
 		<div>
 			<h1>Shopping Page</h1>
 			<hr />
 			<div style={{ display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
-				{/* <ProductCard product={product}>
-					<ProductCard.Image />
-					<ProductCard.Title title= "Cafe" />
-					<ProductCard.Buttons counter={counter} increaseBy={increaseBy} />
-				</ProductCard> */}
-
 				<ProductCard product={product}>
 					<ProductCard.Image />
-					<ProductCard.Title title="Cafe" />
-					<ProductCard.Buttons counter={counter} increaseBy={increaseBy} />
+					<ProductCard.Title title= {"Hello"}/>
+					<ProductCard.Buttons />
+				</ProductCard>
+
+				<ProductCard product={product}>
+					<ProductImage />
+					<ProductTitle />
+					<ProductButtons />
 				</ProductCard>
 			</div>
 		</div>
