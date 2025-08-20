@@ -1,5 +1,9 @@
-import { ProductCard } from "../components/ProductCard";
-import { ProductImage, ProductTitle, ProductButtons } from "../components";
+import {
+	ProductCard,
+	ProductImage,
+	ProductTitle,
+	ProductButtons,
+} from "../components";
 
 const product = {
 	id: "1",
