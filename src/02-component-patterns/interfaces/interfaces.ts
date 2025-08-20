@@ -16,3 +16,11 @@ export interface ProductContextProps {
 	increaseBy: (value: number) => void;
 	product: Product;
 }
+
+export interface ProductImageProps {
+  img?: string;
+}
+
+export interface ProductTitleProps {
+  title?: string;
+}
