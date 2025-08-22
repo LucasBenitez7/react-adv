@@ -15,6 +15,7 @@ export interface Props {
 	className?: string;
 	style?: React.CSSProperties;
 	onChange?: (args: onChangeArgs) => void;
+	value?: number;
 }
 
 export const ProductCard = ({
@@ -23,16 +24,17 @@ export const ProductCard = ({
 	className,
 	style,
 	onChange,
+	value,
 }: Props) => {
-	const { increaseBy, counter } = useProduct({ onChange, product });
+	const { increaseBy, counter } = useProduct({ onChange, product, value});
 
-	const value = useMemo(
-		() => ({ increaseBy, counter, product, className, style, onChange }),
-		[increaseBy, counter, product, className, style, onChange]
+	const valueProvider = useMemo(
+		() => ({ increaseBy, counter, product, className, style, onChange, value }),
+		[increaseBy, counter, product, className, style, onChange, value]
 	);
 
 	return (
-		<Provider value={value}>
+		<Provider value={valueProvider}>
 			<div className={`${styles.productCard} ${className}`} style={style}>
 				{children}
 			</div>

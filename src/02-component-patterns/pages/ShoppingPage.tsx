@@ -30,11 +30,13 @@ type Cart = Record<string, ProductInCart>;
 export const ShoppingPage = () => {
 	const [shoppingCart, setShoppingCart] = useState<Cart>({});
 
+	const cartItems = Object.values(shoppingCart);
+	const hasItmes = cartItems.length > 0;
+
 	const onProductCountChange = ({ count, product }: onChangeArgs) => {
 		setShoppingCart((prev) => {
 			if (count === 0) {
 				const { [product.id]: _removed, ...rest } = prev;
-				console.log(_removed);
 				return rest;
 			}
 			const prevItem = prev[product.id];
@@ -50,7 +52,7 @@ export const ShoppingPage = () => {
 	};
 
 	return (
-		<div>
+		<div> 
 			<h1
 				style={{
 					margin: "20px auto",
@@ -67,6 +69,7 @@ export const ShoppingPage = () => {
 						className="bg-dark"
 						product={product}
 						onChange={onProductCountChange}
+						value={shoppingCart[product.id]?.count ?? 0}
 					>
 						<ProductImage className="custom-image" />
 						<ProductTitle className="text-white" />
@@ -75,28 +78,32 @@ export const ShoppingPage = () => {
 				))}
 			</div>
 
-			<div className="shopping-cart">
-				<ProductCard
-					style={{ width: "100px", margin: "10px 10px" }}
-					className="bg-dark"
-					product={product1}
-				>
-					<ProductImage className="custom-image" />
-					<ProductButtons className="custom-button" />
-				</ProductCard>
-
-				<ProductCard
-					style={{ width: "100px", margin: "10px 10px" }}
-					className="bg-dark"
-					product={product2}
-				>
-					<ProductImage className="custom-image" />
-					<ProductButtons className="custom-button" />
-				</ProductCard>
-			</div>
+			{hasItmes && (
+				<div className="shopping-cart">
+					{cartItems.map((item, key) => (
+						<ProductCard
+							key={key}
+							style={{ width: "100px", margin: "10px 10px" }}
+							className="bg-dark"
+							product={item}
+							onChange={onProductCountChange}
+							value={item.count}
+						>
+							<ProductImage className="custom-image" />
+							<ProductButtons className="custom-button" />
+						</ProductCard>
+					))}
+				</div>
+			)}
 
 			<div>
-				<code>{JSON.stringify(shoppingCart, null, 5)}</code>
+				<code>
+					{JSON.stringify(
+						cartItems.map((item) => item.count),
+						null,
+						5
+					)}
+				</code>
 			</div>
 		</div>
 	);
