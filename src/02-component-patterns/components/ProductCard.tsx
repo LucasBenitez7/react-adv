@@ -1,6 +1,10 @@
 import { createContext, ReactNode, useMemo } from "react";
 import { useProduct } from "../hooks/useProduct";
-import { ProductContextProps, Product } from "../interfaces/interfaces";
+import {
+	ProductContextProps,
+	Product,
+	onChangeArgs,
+} from "../interfaces/interfaces";
 import styles from "../styles/styles.module.css";
 
 export const ProductContext = createContext({} as ProductContextProps);
@@ -10,14 +14,21 @@ export interface Props {
 	children?: ReactNode;
 	className?: string;
 	style?: React.CSSProperties;
+	onChange?: (args: onChangeArgs) => void;
 }
 
-export const ProductCard = ({ children, product, className, style }: Props) => {
-	const { increaseBy, counter } = useProduct();
+export const ProductCard = ({
+	children,
+	product,
+	className,
+	style,
+	onChange,
+}: Props) => {
+	const { increaseBy, counter } = useProduct({ onChange, product });
 
 	const value = useMemo(
-		() => ({ increaseBy, counter, product, className, style }),
-		[increaseBy, counter, product, className, style]
+		() => ({ increaseBy, counter, product, className, style, onChange }),
+		[increaseBy, counter, product, className, style, onChange]
 	);
 
 	return (
