@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Product, onChangeArgs } from "../interfaces/interfaces";
 
 interface ProductInCart extends Product {
@@ -9,29 +9,29 @@ type Cart = Record<string, ProductInCart>;
 export const useShoppingCart = () => {
 	const [shoppingCart, setShoppingCart] = useState<Cart>({});
 
-	const cartItems = Object.values(shoppingCart);
-	const hasItems = cartItems.length > 0;
-
-	const onProductCountChange = ({ count, product }: onChangeArgs) => {
-		setShoppingCart((prev) => {
-			const productInCart: ProductInCart = prev[product.id] || {
-				...product,
-				count: 0,
-			};
-
-			if (Math.max(productInCart.count + count, 0) > 0) {
-				productInCart.count += count;
-
+	const onProductCountChange = useCallback(
+		({ count, product }: onChangeArgs) => {
+			setShoppingCart((prev) => {
+				if (count === 0) {
+					const { [product.id]: _removed, ...rest } = prev;
+					return rest;
+				}
+				const prevItem = prev[product.id];
 				return {
 					...prev,
-					[product.id]: productInCart,
+					[product.id]: {
+						...(prevItem ?? product),
+						count,
+					},
 				};
-			}
+			});
+		},
+		[]
+	);
 
-			const { [product.id]: _removed, ...rest } = prev;
-			return rest;
-		});
-	};
+	const cartItems = useMemo(() => Object.values(shoppingCart), [shoppingCart]);
+	const hasItems = cartItems.length > 0;
+
 	return {
 		shoppingCart,
 		hasItems,
