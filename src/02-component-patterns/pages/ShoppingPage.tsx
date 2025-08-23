@@ -1,58 +1,19 @@
-import { useState } from "react";
 import {
 	ProductCard,
 	ProductImage,
 	ProductTitle,
 	ProductButtons,
 } from "../components";
-import { Product, onChangeArgs } from "../interfaces/interfaces";
+import { useShoppingCart } from "../hooks/useShoppingCart";
+import { products } from "../data/products";
 import "../styles/custom-styles.css";
 
-const product1 = {
-	id: "1",
-	title: "Coffe Mug - Card",
-	img: "./coffee-mug.png",
-};
-
-const product2 = {
-	id: "2",
-	title: "Coffe Mug - Meme",
-	img: "./coffee-mug2.png",
-};
-
-const products: Product[] = [product1, product2];
-
-interface ProductInCart extends Product {
-	count: number;
-}
-type Cart = Record<string, ProductInCart>;
-
 export const ShoppingPage = () => {
-	const [shoppingCart, setShoppingCart] = useState<Cart>({});
-
-	const cartItems = Object.values(shoppingCart);
-	const hasItmes = cartItems.length > 0;
-
-	const onProductCountChange = ({ count, product }: onChangeArgs) => {
-		setShoppingCart((prev) => {
-			if (count === 0) {
-				const { [product.id]: _removed, ...rest } = prev;
-				return rest;
-			}
-			const prevItem = prev[product.id];
-
-			return {
-				...prev,
-				[product.id]: {
-					...(prevItem ?? product),
-					count,
-				},
-			};
-		});
-	};
+	const { onProductCountChange, shoppingCart, cartItems, hasItems } =
+		useShoppingCart();
 
 	return (
-		<div> 
+		<div>
 			<h1
 				style={{
 					margin: "20px auto",
@@ -78,11 +39,11 @@ export const ShoppingPage = () => {
 				))}
 			</div>
 
-			{hasItmes && (
+			{hasItems && (
 				<div className="shopping-cart">
-					{cartItems.map((item, key) => (
+					{cartItems.map((item) => (
 						<ProductCard
-							key={key}
+							key={item.id}
 							style={{ width: "100px", margin: "10px 10px" }}
 							className="bg-dark"
 							product={item}
@@ -95,16 +56,6 @@ export const ShoppingPage = () => {
 					))}
 				</div>
 			)}
-
-			<div>
-				<code>
-					{JSON.stringify(
-						cartItems.map((item) => item.count),
-						null,
-						5
-					)}
-				</code>
-			</div>
 		</div>
 	);
 };

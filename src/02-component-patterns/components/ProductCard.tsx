@@ -26,7 +26,7 @@ export const ProductCard = ({
 	onChange,
 	value,
 }: Props) => {
-	const { increaseBy, counter } = useProduct({ onChange, product, value});
+	const { increaseBy, counter } = useProduct({ onChange, product, value });
 
 	const valueProvider = useMemo(
 		() => ({ increaseBy, counter, product, className, style, onChange, value }),
