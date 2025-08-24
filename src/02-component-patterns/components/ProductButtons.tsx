@@ -8,17 +8,28 @@ export interface ProductButtonsProps {
 }
 
 export const ProductButtons = ({ className, style }: ProductButtonsProps) => {
-	const { counter, increaseBy } = useContext(ProductContext);
+	const { counter, increaseBy, maxCount } = useContext(ProductContext);
+
+	const isMaxReached = maxCount != null && counter >= maxCount;
+	const isMin = counter <= 0;
+
 	return (
 		<div className={`${styles.buttonsContainer} ${className}`} style={style}>
 			<button
+				type="button"
 				onClick={() => increaseBy(-1)}
-				className={`${styles.buttonMinus}`}
+				className={`${styles.buttonMinus} ${isMin ? styles.disabled : ""}`}
+				disabled={isMin}
 			>
 				-
 			</button>
 			<span className={styles.countLabel}>{counter}</span>
-			<button onClick={() => increaseBy(1)} className={`${styles.buttonAdd}`}>
+			<button
+				type="button"
+				onClick={() => increaseBy(1)}
+				className={`${styles.buttonAdd} ${isMaxReached ? styles.disabled : ""}`}
+				disabled={isMaxReached}
+			>
 				+
 			</button>
 		</div>

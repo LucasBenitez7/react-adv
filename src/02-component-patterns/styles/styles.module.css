@@ -27,7 +27,7 @@
 	background-color: transparent;
 	border: 1px solid black;
 	border-radius: 5px 0px 0px 5px;
-	font-size: 18px;
+	font-size: 16px;
 	width: 30px;
 }
 
@@ -36,8 +36,7 @@
 }
 
 .countLabel {
-	border-bottom: 1px solid black;
-	border-top: 1px solid black;
+	border: 1px solid black;
 	font-size: 16px;
 	height: 25px;
 	text-align: center;
@@ -49,11 +48,17 @@
 	background-color: transparent;
 	border: 1px solid black;
 	border-radius: 0px 5px 5px 0px;
-	font-size: 18px;
-	padding-top: 1px;
+	font-size: 16px;
 	width: 30px;
 }
 
 .buttonAdd:hover {
 	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.disabled {
+	background-color: rgba(0, 0, 0, 0.1) !important;
+	color: rgba(139, 139, 139, 1) !important;
+	border: 1px solid rgba(139, 139, 139, 1) !important;
+	cursor: default !important; 
 }

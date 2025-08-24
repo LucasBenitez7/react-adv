@@ -4,14 +4,13 @@ import {
 	ProductTitle,
 	ProductButtons,
 } from "../components";
-import { useShoppingCart } from "../hooks/useShoppingCart";
 import { products } from "../data/products";
 import "../styles/custom-styles.css";
+import styles from "../styles/styles.module.css";
+
+const product = products[0];
 
 export const ShoppingPage = () => {
-	const { onProductCountChange, shoppingCart, cartItems, hasItems } =
-		useShoppingCart();
-
 	return (
 		<div>
 			<h1
@@ -23,39 +22,53 @@ export const ShoppingPage = () => {
 			</h1>
 			<hr />
 
-			<div style={{ display: "flex", flexWrap: "wrap", flexDirection: "row" }}>
-				{products.map((product) => (
-					<ProductCard
-						key={product.id}
-						className="bg-dark"
-						product={product}
-						onChange={onProductCountChange}
-						value={shoppingCart[product.id]?.count ?? 0}
-					>
-						<ProductImage className="custom-image" />
-						<ProductTitle className="text-white" />
-						<ProductButtons className="custom-button" />
-					</ProductCard>
-				))}
-			</div>
-
-			{hasItems && (
-				<div className="shopping-cart">
-					{cartItems.map((item) => (
-						<ProductCard
-							key={item.id}
-							style={{ width: "100px", margin: "10px 10px" }}
-							className="bg-dark"
-							product={item}
-							onChange={onProductCountChange}
-							value={item.count}
-						>
+			<div>
+				<ProductCard
+					key={product.id}
+					className="bg-dark"
+					product={product}
+					initialValues={{ count: 1, maxCount: 10 }}
+				>
+					{({ reset, count, increaseBy, isMaxReached, isMin }) => (
+						<>
 							<ProductImage className="custom-image" />
+							<ProductTitle className="text-white" />
 							<ProductButtons className="custom-button" />
-						</ProductCard>
-					))}
-				</div>
-			)}
+
+							<div
+								className="custom-button"
+								style={{
+									display: "flex",
+									flexDirection: "row",
+									margin: "10px",
+								}}
+							>
+								<button
+									onClick={() => increaseBy(-2)}
+									className={`${styles.buttonMinus} ${
+										isMin ? styles.disabled : ""
+									}`}
+									disabled={isMin}
+								>
+									-2
+								</button>
+								<span className={styles.countLabel}>{count}</span>
+								<button
+									onClick={() => increaseBy(+2)}
+									className={`${styles.buttonAdd} ${
+										isMaxReached ? styles.disabled : ""
+									}`}
+									disabled={isMaxReached}
+								>
+									+2
+								</button>
+							</div>
+							
+							<button onClick={reset}>Reset</button>
+						</>
+					)}
+				</ProductCard>
+			</div>
 		</div>
 	);
 };
