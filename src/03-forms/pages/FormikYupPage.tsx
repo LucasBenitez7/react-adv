@@ -4,14 +4,19 @@ import "../styles/styles.css";
 
 const schema = Yup.object({
 	firstName: Yup.string()
-		.trim()
+		.transform((v) => (typeof v === "string" ? v.trim() : v))
 		.min(2, "Mínimo 2 caracteres")
+		.max(15, "Máximo 15 caracteres")
 		.required("Requerido"),
 	lastName: Yup.string()
-		.trim()
+		.transform((v) => (typeof v === "string" ? v.trim() : v))
 		.min(2, "Mínimo 2 caracteres")
+		.max(15, "Máximo 15 caracteres")
 		.required("Requerido"),
-	email: Yup.string().trim().email("Email inválido").required("Requerido"),
+	email: Yup.string()
+		.transform((v) => (typeof v === "string" ? v.trim().toLowerCase() : v))
+		.email("Email inválido")
+		.required("Requerido"),
 	password: Yup.string()
 		.min(8, "Mínimo 8 caracteres")
 		.matches(/[a-z]/, "Incluye una minúscula")
@@ -38,18 +43,18 @@ export const FormikYupPage = () => {
 	const { errors, touched, handleReset, handleSubmit, getFieldProps } = useFormik<FormikData>({
 		initialValues,
 		validationSchema: schema,
+		validateOnChange: true,
+		validateOnBlur: true,
 		onSubmit: (vals) => {
 			console.log(vals);
 		},
-		validateOnChange: true,
-		validateOnBlur: true,
 	});
 
 	return (
-		<div className="formik-container">
-			<h1 className="formik-title">Formik Yup</h1>
+		<div className="form-container">
+			<h1 className="form-title">Formik Yup</h1>
 
-			<form className="formik-form" onSubmit={handleSubmit} noValidate>
+			<form className="form-submit" onSubmit={handleSubmit} noValidate>
 				<label htmlFor="firstName">First Name</label>
 				<input type="text" {...getFieldProps("firstName")} />
 				{touched.firstName && errors.firstName && (

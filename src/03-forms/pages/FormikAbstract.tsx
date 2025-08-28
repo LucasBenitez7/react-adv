@@ -41,8 +41,8 @@ const initialValues: FormikData = {
 
 export const FormikAbstract = () => {
 	return (
-		<div className="formik-container">
-			<h1 className="formik-title">Formik Abstract</h1>
+		<div className="form-container">
+			<h1 className="form-title">Formik Abstract</h1>
 			<Formik
 				initialValues={initialValues}
 				onSubmit={(vals) => {
@@ -53,7 +53,7 @@ export const FormikAbstract = () => {
 				validateOnBlur
 			>
 				{(formik) => (
-					<Form className="formik-form" noValidate>
+					<Form className="form-submit" noValidate>
 						<MyTextinput label="First Name" name="firstName"/>
 						
 						<MyTextinput label="Last Name" name="lastName"/>

@@ -14,9 +14,9 @@ export const RegisterPage = () => {
 	} = useForm();
 
 	return (
-		<div>
-			<h1>Register Page</h1>
-			<form onSubmit={onSubmit} noValidate>
+		<div className="form-container">
+			<h1 className="form-title">Register Page</h1>
+			<form className="form-submit-register" onSubmit={onSubmit} noValidate>
 				<input
 					type="text"
 					name="name"
@@ -25,7 +25,6 @@ export const RegisterPage = () => {
 					onChange={onInputChange}
 					required
 					autoComplete="name"
-					className={errors.name && "has-error"}
 				/>
 				{errors.name && <span>{errors.name}</span>}
 

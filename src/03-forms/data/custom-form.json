@@ -1,0 +1,35 @@
+[
+  {
+    "type": "input",
+    "name": "nombre",
+    "label": "Nombre",
+    "placeholder": "Lucas",
+    "value": "",
+    "validations": [
+      { "type": "required", "value": true, "message": "El nombre es requerido" },
+      { "type": "min", "value": 2, "message": "Mínimo 2 caracteres" },
+      { "type": "max", "value": 15, "message": "Máximo 15 caracteres" }
+    ]
+  },
+  {
+    "type": "input",
+    "name": "apellido",
+    "label": "Apellido",
+    "placeholder": "Benitez",
+    "value": ""
+  },
+  {
+    "type": "select",
+    "name": "selecciona",
+    "label": "Seleccione algo",
+    "value": "",
+    "validations": [
+      { "type": "required", "value": true, "message": "Seleccione una opción" }
+    ],
+    "options": [
+      { "id": 1, "label": "React" },
+      { "id": 2, "label": "JavaScript" },
+      { "id": 3, "label": "TypeScript" }
+    ]
+  }
+]

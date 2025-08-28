@@ -63,9 +63,9 @@ export const FormikPage = () => {
 	});
 
 	return (
-		<div className="formik-container">
-			<h1 className="formik-title">Formik Basic</h1>
-			<form className="formik-form" onSubmit={handleSubmit} noValidate>
+		<div className="form-container">
+			<h1 className="form-title">Formik Basic</h1>
+			<form className="form-submit" onSubmit={handleSubmit} noValidate>
 				<label htmlFor="firstName">First Name</label>
 				<input
 					type="text"

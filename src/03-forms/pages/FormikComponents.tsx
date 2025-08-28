@@ -4,14 +4,19 @@ import "../styles/styles.css";
 
 const schema = Yup.object({
 	firstName: Yup.string()
-		.trim()
+		.transform((v) => (typeof v === "string" ? v.trim() : v))
 		.min(2, "Mínimo 2 caracteres")
+		.max(15, "Máximo 15 caracteres")
 		.required("Requerido"),
 	lastName: Yup.string()
-		.trim()
+		.transform((v) => (typeof v === "string" ? v.trim() : v))
 		.min(2, "Mínimo 2 caracteres")
+		.max(15, "Máximo 15 caracteres")
 		.required("Requerido"),
-	email: Yup.string().trim().email("Email inválido").required("Requerido"),
+	email: Yup.string()
+		.transform((v) => (typeof v === "string" ? v.trim().toLowerCase() : v))
+		.email("Email inválido")
+		.required("Requerido"),
 	password: Yup.string()
 		.min(8, "Mínimo 8 caracteres")
 		.matches(/[a-z]/, "Incluye una minúscula")
@@ -40,8 +45,8 @@ const initialValues: FormikData = {
 
 export const FormikComponents = () => {
 	return (
-		<div className="formik-container">
-			<h1 className="formik-title">Formik Components</h1>
+		<div className="form-container">
+			<h1 className="form-title">Formik Components</h1>
 			<Formik
 				initialValues={initialValues}
 				onSubmit={(vals) => {
@@ -52,7 +57,7 @@ export const FormikComponents = () => {
 				validateOnBlur
 			>
 				{(formik) => (
-					<Form className="formik-form" noValidate>
+					<Form className="form-submit" noValidate>
 						<label htmlFor="firstName">First Name</label>
 						<Field type="text" name="firstName" />
 						<ErrorMessage name="firstName" component="span" />
